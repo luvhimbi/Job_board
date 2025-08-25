@@ -1,4 +1,4 @@
-# Job Board & CV Management App
+# Job Board  App
 
 A Laravel-based web application designed to help small businesses post jobs, manage applicants, and enable candidates to create, upload, and download CVs. This platform also includes automatic skill parsing from uploaded resumes to make hiring easier and more efficient.
 
@@ -45,7 +45,3 @@ A Laravel-based web application designed to help small businesses post jobs, man
 - Git
 
 ### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/luvhimbi/job-board-cv-app.git
-   cd job-board-cv-app
