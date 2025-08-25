@@ -38,6 +38,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('applications.my_applications') }}">My Applications</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('cv.index') }}">Cv Builder</a>
+                        </li>
                     @endif
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('profile.show') }}">Profile</a>

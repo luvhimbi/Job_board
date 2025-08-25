@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CVController;
 use App\Http\Controllers\JobPostingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -37,4 +38,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/jobs/{job}/apply', [ApplicationController::class, 'store'])->name('applications.store');
     Route::get('/applicants', [ApplicationController::class, 'index'])->name('applications.index');
     Route::get('/my-applications', [ApplicationController::class, 'myApplications'])->name('applications.my_applications');
+
+    Route::get('/cv', [CVController::class, 'index'])->name('cv.index');          // View CV
+    Route::get('/cv/create', [CVController::class, 'create'])->name('cv.create'); // Build/Edit CV
+    Route::post('/cv', [CVController::class, 'store'])->name('cv.store');         // Save CV
+    Route::get('/cv/edit', [CVController::class, 'edit'])->name('cv.edit');       // Edit existing CV
+    Route::put('/cv', [CVController::class, 'update'])->name('cv.update');        // Update CV
+    Route::get('/cv/download', [CvController::class, 'download'])->name('cv.download');
+
 });
