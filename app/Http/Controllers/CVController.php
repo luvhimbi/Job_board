@@ -100,7 +100,7 @@ class CVController extends Controller
         $experiences = Experiance::where('cv_id', $cv->id)->orderBy('start_date', 'desc')->get();
         $educations = Education::where('cv_id', $cv->id)->orderBy('start_year', 'desc')->get();
 
-        $pdf = Pdf::loadView('Cvpdf', compact('cv', 'experiences', 'educations'))
+        $pdf = Pdf::loadView('Applicant.Cvpdf', compact('cv', 'experiences', 'educations'))
             ->setPaper('a4', 'portrait');
 
         return $pdf->download('My_CV.pdf');

@@ -23,37 +23,49 @@
                         <p>Email: {{ $cv->email }} | Phone: {{ $cv->phone }}</p>
 
                         <h5>Summary</h5>
-                        <p>{{ $cv->summary }}</p>
+                        <p>{{ $cv->summary ?? 'No summary provided.' }}</p>
 
                         <h5>Skills</h5>
                         @php
-                            $skills = array_map('trim', explode(',', $cv->skills));
+                            $skills = array_map('trim', explode(',', $cv->skills ?? ''));
                         @endphp
-                        <ul>
-                            @foreach($skills as $skill)
-                                @if($skill)
-                                    <li>{{ $skill }}</li>
-                                @endif
-                            @endforeach
-                        </ul>
+                        @if(!empty($skills) && $skills[0] !== '')
+                            <ul>
+                                @foreach($skills as $skill)
+                                    @if($skill)
+                                        <li>{{ $skill }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @else
+                            <p>No skills provided.</p>
+                        @endif
 
                         <h5>Experience</h5>
-                        @foreach($cv->experiences ?? [] as $exp)
-                            <div class="mb-3">
-                                <strong>{{ $exp->position }} at {{ $exp->company }}</strong>
-                                <p>{{ $exp->start_date }} - {{ $exp->end_date ?? 'Present' }}</p>
-                                <p>{{ $exp->achievements }}</p>
-                            </div>
-                        @endforeach
+                        @if($cv->experiences->isNotEmpty())
+                            @foreach($cv->experiences as $exp)
+                                <div class="mb-3">
+                                    <strong>{{ $exp->position }} at {{ $exp->company }}</strong>
+                                    <p>{{ $exp->start_date }} - {{ $exp->end_date ?? 'Present' }}</p>
+                                    <p>{{ $exp->achievements ?? 'No achievements listed.' }}</p>
+                                </div>
+                            @endforeach
+                        @else
+                            <p>No experience provided.</p>
+                        @endif
 
                         <h5>Education</h5>
-                        @foreach($cv->educations ?? [] as $edu)
-                            <div class="mb-3">
-                                <strong>{{ $edu->degree }} from {{ $edu->institution }}</strong>
-                                <p>{{ $edu->start_year }} - {{ $edu->end_year ?? 'Present' }}</p>
-                                <p>{{ $edu->details }}</p>
-                            </div>
-                        @endforeach
+                        @if($cv->educations->isNotEmpty())
+                            @foreach($cv->educations as $edu)
+                                <div class="mb-3">
+                                    <strong>{{ $edu->degree }} from {{ $edu->institution }}</strong>
+                                    <p>{{ $edu->start_year }} - {{ $edu->end_year ?? 'Present' }}</p>
+                                    <p>{{ $edu->details ?? 'No details provided.' }}</p>
+                                </div>
+                            @endforeach
+                        @else
+                            <p>No education provided.</p>
+                        @endif
                     </div>
                 </div>
                 <div class="text-center">

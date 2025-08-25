@@ -18,4 +18,14 @@ class CV extends Model
         'experience',
         'education',
     ];
+
+    public function experiences()
+    {
+        return $this->hasMany(Experiance::class, 'cv_id');
+    }
+
+    public function educations()
+    {
+        return $this->hasMany(Education::class, 'cv_id');
+    }
 }
