@@ -47,5 +47,5 @@ A Laravel-based web application designed to help small businesses post jobs, man
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/job-board-cv-app.git
+   git clone https://github.com/luvhimbi/job-board-cv-app.git
    cd job-board-cv-app
