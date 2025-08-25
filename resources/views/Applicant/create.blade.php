@@ -6,6 +6,31 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h2 class="text-center mb-4">Apply for {{ $job->title }}</h2>
+
+            <!-- Company Card -->
+            @if($job->company)
+                <a href="{{ route('companies.show', $job->company->id) }}" class="text-decoration-none">
+                    <div class="card mb-4 shadow-sm border-0 hover-shadow">
+                        <div class="card-body text-center">
+                            @if($job->company->logo)
+                                <img src="{{ asset('storage/' . $job->company->logo) }}"
+                                     alt="{{ $job->company->name }}"
+                                     class="img-fluid mb-2 rounded"
+                                     style="max-height: 100px;">
+                            @else
+                                <img src="{{ asset('images/default-company.png') }}"
+                                     alt="No logo"
+                                     class="img-fluid mb-2 rounded"
+                                     style="max-height: 100px;">
+                            @endif
+                            <h5 class="card-title text-dark fw-bold mb-0">{{ $job->company->name }}</h5>
+                            <small class="text-muted">View company profile</small>
+                        </div>
+                    </div>
+                </a>
+            @endif
+
+            <!-- Application Form -->
             <form method="POST" action="{{ route('applications.store', $job->id) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">

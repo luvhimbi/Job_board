@@ -43,6 +43,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Applications::class, 'user_id');
     }
+    public function cv()
+    {
+        return $this->hasOne(CV::class, 'user_id');
+    }
     /**
      * Get the attributes that should be cast.
      *

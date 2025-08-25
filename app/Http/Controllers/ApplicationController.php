@@ -15,17 +15,21 @@ class ApplicationController extends Controller
 
     public function create($jobId)
     {
-        $job = Jobs::findOrFail($jobId);
+        $job = Jobs::with('company')->findOrFail($jobId);
+
         if ($job->status !== 'open') {
-            return redirect()->route('applicant.dashboard')->with('error', 'This job is not open for applications.');
+            return redirect()->route('applicant.dashboard')
+                ->with('error', 'This job is not open for applications.');
         }
 
         if (Applications::where('user_id', Auth::id())->where('job_id', $jobId)->exists()) {
-            return redirect()->route('Applicant.dashboard')
+            return redirect()->route('applicant.dashboard')
                 ->with('error', 'You have already applied for this job.');
         }
-        return view('applications.create', compact('job'));
+
+        return view('Applicant.create', compact('job'));
     }
+
 
     public function store(Request $request, $jobId)
     {
