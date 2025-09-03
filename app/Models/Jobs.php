@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Jobs extends Model
 {
-    use HasFactory;
+    use HasFactory,Searchable;
 
     /**
      * The table associated with the model.
@@ -51,5 +52,16 @@ class Jobs extends Model
     public function applications()
     {
         return $this->hasMany(Applications::class, 'job_id');
+    }
+    public function toSearchableArray()
+    {
+        return [
+            'title'       => $this->title,
+            'location'    => $this->location,
+            'type'        => $this->type,
+            'status'      => $this->status,
+            'description' => $this->description,
+            'requirements'=> $this->requirements,
+        ];
     }
 }

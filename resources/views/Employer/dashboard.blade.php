@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
 
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -21,9 +21,18 @@
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
 
+            <!-- Search Bar -->
+            <form method="GET" action="{{ route('employer.dashboard') }}" class="mb-4">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search jobs..."
+                           value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+
             <h4>Your Job Postings</h4>
             @if ($jobs->isEmpty())
-                <p>No job postings yet. Create one to get started!</p>
+                <p>No job postings found.</p>
             @else
                 <table class="table table-striped">
                     <thead>
@@ -33,21 +42,38 @@
                         <th>Type</th>
                         <th>Status</th>
                         <th>Created At</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($jobs as $job)
                         <tr>
-                            <td>{{ $job->title }}</td>
+                            <td>
+                                <a href="{{ route('jobPostingInfo.show', $job->id) }}" class="text-decoration-none">
+                                    {{ $job->title }}
+                                </a>
+                            </td>
                             <td>{{ $job->location }}</td>
                             <td>{{ ucfirst($job->type) }}</td>
                             <td>{{ ucfirst($job->status) }}</td>
                             <td>{{ $job->created_at->format('M d, Y') }}</td>
+                            <td>
+                                <a href="{{ route('jobPosting.edit', $job->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                <form action="{{ route('jobs.destroy', $job->id) }}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this job?');">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
             @endif
+
         </div>
     </div>
 @endsection

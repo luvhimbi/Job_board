@@ -7,13 +7,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/lux/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Poppins', sans-serif; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* full height layout */
+            margin: 0;
+        }
+        main {
+            flex: 1; /* push footer to bottom */
+        }
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" >Intelli_JobBoard</a>
+        <a class="navbar-brand">Intelli_JobBoard</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -21,51 +30,45 @@
             <ul class="navbar-nav ms-auto">
                 @auth
                     @if (Auth::user()->role === 'employer')
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('employer.dashboard') }}">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('jobs.create') }}">Create Job</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('applications.index') }}">Manage Applications</a>
-                        </li>
-
+                        <li class="nav-item"><a class="nav-link" href="{{ route('employer.dashboard') }}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('jobs.create') }}">Create Job</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('applications.index') }}">Manage Applications</a></li>
                     @elseif (Auth::user()->role === 'applicant')
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('applicant.dashboard') }}">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('applications.my_applications') }}">My Applications</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cv.index') }}">Cv Builder</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('applicant.dashboard') }}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('applications.my_applications') }}">My Applications</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('cv.index') }}">Cv Builder</a></li>
                     @endif
+                    <li class="nav-item"><a class="nav-link" href="{{ route('profile.show') }}">Profile</a></li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('profile.show') }}">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                        <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                             @csrf
                             <button type="submit" class="nav-link btn btn-link">Logout</button>
                         </form>
                     </li>
                 @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">Register</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
                 @endauth
             </ul>
         </div>
     </div>
 </nav>
-<div class="container mt-4">
+
+<main class="container mt-4">
     @yield('content')
-</div>
+</main>
+
+<footer class="bg-dark text-white py-3 mt-auto">
+    <div class="container text-center">
+        <p class="mb-1">&copy; {{ date('Y') }} Intelli_JobBoard. All Rights Reserved.</p>
+        <p class="mb-0">
+            <a href="#" class="text-white text-decoration-none me-3">Privacy Policy</a>
+            <a href="#" class="text-white text-decoration-none me-3">Terms of Service</a>
+            <a href="#" class="text-white text-decoration-none">Contact Us</a>
+        </p>
+    </div>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

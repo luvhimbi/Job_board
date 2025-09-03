@@ -34,12 +34,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
-
+    Route::get('/jobs/{id}', [JobPostingController::class, 'showApplicationInfo'])->name('jobPostingInfo.show');
     Route::get('/jobs/{job}/apply', [ApplicationController::class, 'create'])->name('applications.create');
     Route::post('/jobs/{job}/apply', [ApplicationController::class, 'store'])->name('applications.store');
     Route::get('/applicants', [ApplicationController::class, 'index'])->name('applications.index');
     Route::get('/my-applications', [ApplicationController::class, 'myApplications'])->name('applications.my_applications');
-
+    Route::get('/jobs/{job}', [App\Http\Controllers\JobPostingController::class, 'show'])->name('jobs.show');
     Route::get('/cv', [CVController::class, 'index'])->name('cv.index');
     Route::get('/cv/create', [CVController::class, 'create'])->name('cv.create');
     Route::post('/cv', [CVController::class, 'store'])->name('cv.store');
@@ -47,5 +47,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/cv', [CVController::class, 'update'])->name('cv.update');
     Route::get('/cv/download', [CvController::class, 'download'])->name('cv.download');
     Route::get('/companies/{id}', [CompanyController::class, 'show'])->name('companies.show');
+
+
+    Route::get('/job-postings/{id}/edit', [JobPostingController::class, 'edit'])->name('jobPosting.edit');
+    Route::put('/job-postings/{id}', [JobPostingController::class, 'update'])->name('jobPosting.update');
+
+    Route::delete('/jobs/{id}', [JobPostingController::class, 'destroy'])->name('jobs.destroy');
 
 });
